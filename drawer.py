@@ -1,59 +1,104 @@
 import matplotlib.figure
 import matplotlib.pyplot as plt
-from regressions.regression import Poly
+import numpy as np
+from matplotlib.backends.backend_pdf import PdfPages
+from regressions.poly import Poly
 from regressions.plot_data import PlotData, format_input
+
+markers = ['o', 'v', '.', '^']
+
+colors = ['black', 'grey', 'red', 'blue']
 
 
 class Drawer:
     def __init__(self):
         plt.style.use('vtek_style.mplstyle')
-        self.figures: list[matplotlib.figure.Figure] = []
+        self.figures = []
+        self.subplots: list[matplotlib.figure.Figure] = []
 
-    def add_figure(self, user_data: PlotData):
+    def add_figure(self,
+                   ud: PlotData,
+                   errors: bool = False,
+                   fill_between: bool = False,
+                   connect_pts: bool = False):
         fig = plt.figure(figsize=[9.6, 7.2])
-        fig.set(facecolor='white')
         ax = fig.add_subplot()
-        ax.grid()
-        ax.scatter(user_data.df[user_data.x_name], user_data.df[user_data.y_name])
-        if user_data.approximated:
-            ax.plot(user_data.df[user_data.x_name], user_data.df[user_data.approx_col_name])
-        ax.set_title(user_data.title)
-        ax.set_xlabel(user_data.x_name)
-        ax.set_ylabel(user_data.y_name)
+        fig.set(facecolor='white')
+        self.add_subplot_to_fig(ax,
+                                ud,
+                                errors=errors,
+                                fill_between=fill_between,
+                                connect_pts=connect_pts)
         self.figures.append(fig)
+        return ax
 
-    def show(self):
+    def add_subplot_to_fig(self,
+                           ax,
+                           ud: PlotData,
+                           errors: bool = False,
+                           fill_between: bool = False,
+                           connect_pts: bool = False
+                           ):
+        print(type(ax))
+        ax.grid()
+        ax.set_title(ud.title)
+        ax.set_xlabel(ud.x_name)
+        ax.set_ylabel(ud.y_name)
+        ax.scatter(ud.df[ud.x_name],
+                   ud.df[ud.y_name],
+                   marker=markers[len(self.subplots)],
+                   s=50,
+                   c=colors[len(self.subplots)],
+                   label=ud.label,
+                   zorder=3)
+        if connect_pts:
+            ax.plot(ud.df[ud.x_name],
+                    ud.df[ud.y_name],
+                    linestyle='-',
+                    linewidth=2.5,
+                    c=colors[len(self.subplots)],
+                    zorder=2)
+        if errors:
+            ax.errorbar(ud.df[ud.x_name],
+                        ud.df[ud.y_name],
+                        xerr=ud.df['x_error'],
+                        yerr=ud.df['y_error'],
+                        ls='none',
+                        capsize=2,
+                        elinewidth=1,
+                        capthick=1,
+                        c=colors[len(self.subplots)],
+                        zorder=3
+                        )
+        if ud.approximated:
+            ax.plot(ud.df[ud.x_name],
+                    ud.df[ud.approx_col_name],
+                    linestyle='-',
+                    linewidth=2.5,
+                    c=colors[len(self.subplots)],
+                    zorder=2
+                    )
+            if fill_between:
+                ymin, ymax = ax.get_ylim()
+                integral = np.trapz(ud.df[ud.x_name], ud.df[ud.y_name])
+                print(integral)
+                ax.fill_between(ud.df[ud.x_name],
+                                ud.df[ud.approx_col_name],
+                                color='gray',
+                                label=f"integral={abs(integral)}",
+                                zorder=1)
+                ax.set_ylim(ymin, ymax)
+        self.subplots.append(ax)
+        return ax
+
+    def save(self, filename):
+        pp = PdfPages(filename)
         for fig in self.figures:
-            fig.show()
+            fig.savefig(pp, format='pdf')
+        pp.close()
 
-
-def test_can_add_a_subplot():
-    Y = format_input("""110280
-            107030
-            104140
-            101660
-            99330""")
-    X = format_input("""36
-            37
-            38
-            39
-            40""")
-    title = 'График зависимости давления от объема в изотермическом процессе'
-    label = 'T=const'
-    x_title = 'Объём, мл'
-    y_title = 'Давление, гПа'
-    plot_data = PlotData(X, Y,
-                         title=title,
-                         label=label,
-                         x_name=x_title,
-                         y_name=y_title)
-    plot_data.approximate(Poly())
-    drawer = Drawer()
-    drawer.add_figure(plot_data)
-    drawer.show()
-
-
-if __name__ == '__main__':
-    test_can_add_a_subplot()
-
-
+    def save_pic(self, name):
+        plt.legend()
+        for i, fig in enumerate(self.figures):
+            fig.savefig(f"{name}_{i}.png")
+            plt.close(fig)

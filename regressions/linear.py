@@ -16,6 +16,7 @@ class Linear(Regression, ABC):
         self.reg.fit(np.matrix(x_data).T.A, y_data)
 
     def predict(self, x_data: Series) -> ndarray:
+        self.equation = f"linear {str(self.reg.coef_[0])[0:6]}* X + {str(self.reg.intercept_)[0:6]}"
         return self.reg.predict(np.matrix(x_data).T.A)
 
     @classmethod

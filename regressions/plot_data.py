@@ -18,6 +18,11 @@ class PlotData:
                  x_error: ndarray | None = None,
                  y_error: ndarray | None = None
                  ):
+
+        if not x_error:
+            x_error = np.zeros(len(X))
+        if not y_error:
+            y_error = np.zeros(len(Y))
         self.df = pd.DataFrame()
         self.df[x_name] = format_input(X)
         self.df[y_name] = format_input(Y)
@@ -30,12 +35,14 @@ class PlotData:
         self.approximated: bool = False
         self.approx_col_name = ''
 
-    def approximate(self, reg: Regression):
+    def approximate(self, reg: Regression, repr_equation: bool = False):
         if not self.approximated:
             reg.fit(self.df[self.x_name], self.df[self.y_name])
             self.approx_col_name: str = f"{reg} {self.y_name}({self.x_name})"
             self.df[self.approx_col_name] = reg.predict(self.df[self.x_name])
             self.approximated = True
+            if repr_equation:
+                self.label = f"{self.label}\n {reg.equation}"
             return self.approx_col_name
 
     def __repr__(self):
