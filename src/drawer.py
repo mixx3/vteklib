@@ -2,8 +2,7 @@ import matplotlib.figure
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
-from regressions.poly import Poly
-from regressions.plot_data import PlotData, format_input
+from src.plot_data import PlotData
 
 markers = ['o', 'v', '.', '^']
 
@@ -12,7 +11,7 @@ colors = ['black', 'grey', 'red', 'blue']
 
 class Drawer:
     def __init__(self):
-        plt.style.use('vtek_style.mplstyle')
+        plt.style.use('/Users/new/PycharmProjects/vteklib/src/vtek_style.mplstyle')
         self.figures = []
         self.subplots: list[matplotlib.figure.Figure] = []
 

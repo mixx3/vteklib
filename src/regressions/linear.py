@@ -1,9 +1,8 @@
 from abc import ABC
-from pandas import Series
 from sklearn.linear_model import LinearRegression
 from pandas import Series
 from numpy import ndarray
-from regressions.regression import Regression
+from src.regressions.regression import Regression
 import numpy as np
 
 

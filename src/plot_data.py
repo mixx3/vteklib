@@ -1,13 +1,15 @@
 import numpy as np
 import pandas as pd
-from dataclasses import dataclass
 from numpy import ndarray
-from regressions.regression import Regression
-from regressions.poly import Poly
-from regressions.linear import Linear
+from src.regressions.regression import Regression
+from src.regressions.poly import Poly
+
 
 
 class PlotData:
+    """
+    A data class for plot params.
+    """
     def __init__(self,
                  X: ndarray | str,
                  Y: ndarray | str,
@@ -36,6 +38,11 @@ class PlotData:
         self.approx_col_name = ''
 
     def approximate(self, reg: Regression, repr_equation: bool = False):
+        """
+        Approximates X and Y plot data with chosen regression.
+        Linear and Polynomial regressions is fully supported.
+        Creates an additional column in PlotData.df with predicted values & changes self.approximated flag to True
+        """
         if not self.approximated:
             reg.fit(self.df[self.x_name], self.df[self.y_name])
             self.approx_col_name: str = f"{reg} {self.y_name}({self.x_name})"
@@ -76,7 +83,7 @@ def test_figures():
                          x_name=x_title,
                          y_name=y_title)
     print(type(plot_data.df[plot_data.x_name]))
-    plot_data.approximate(Linear())
+    plot_data.approximate(Poly())
     print(plot_data)
 
 
