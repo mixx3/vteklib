@@ -2,3 +2,7 @@
 *.png
 /.idea/
 *.pyc
+*.pdf
+/build/
+/dist/
+/vteklib.egg-info/

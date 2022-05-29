@@ -1,10 +1,10 @@
 import random
 
-from src.drawer import Drawer
-from src.regressions import PlotData, format_input
-from src.regressions import Linear
+from vteklib.utils.drawer import Drawer
+from vteklib.regressions import PlotData, format_input
+from vteklib.regressions import Linear
 import numpy as np
-from src.regressions.poly import Poly
+from vteklib.regressions.poly import Poly
 
 
 def plot1():

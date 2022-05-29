@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
-from src.plot_data import PlotData
-from src.drawer import Drawer
-from src.regressions.linear import Linear
+from vteklib.utils.plot_data import PlotData
+from vteklib.utils.drawer import Drawer
+from vteklib.regressions.linear import Linear
 df = pd.read_excel('201.xlsx')
 
 T = np.array(df[df.columns[0]])

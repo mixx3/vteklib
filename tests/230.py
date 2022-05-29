@@ -1,6 +1,6 @@
-from src.plot_data import PlotData, format_input
-from src.drawer import Drawer
-from src.regressions.linear import Linear
+from vteklib.utils.plot_data import PlotData, format_input
+from vteklib.utils.drawer import Drawer
+from vteklib.regressions.linear import Linear
 
 
 def plot1():
@@ -156,6 +156,7 @@ def plot1():
                    title='',
                    x_name='V, см³',
                    y_name='P, бар')
+
     ax = drawer.add_figure(pd1, connect_pts=True)
     xmin, xmax = ax.get_xlim()
     ax.plot([5.1627, -2], [21.4, 21.4], c='black', linestyle='dashed')

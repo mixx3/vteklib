@@ -3,7 +3,7 @@ from pandas import Series
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.linear_model import Ridge
 from sklearn.pipeline import make_pipeline
-from src.regressions.regression import Regression
+from vteklib.regressions.regression import Regression
 from abc import ABC
 import numpy as np
 

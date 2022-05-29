@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 from numpy import ndarray
-from src.regressions.regression import Regression
-from src.regressions.poly import Poly
-
+from vteklib.regressions.regression import Regression
+from vteklib.regressions.poly import Poly
+from pandas import Series
 
 
 class PlotData:
@@ -37,16 +37,28 @@ class PlotData:
         self.approximated: bool = False
         self.approx_col_name = ''
 
-    def approximate(self, reg: Regression, repr_equation: bool = False):
+    def approximate(self,
+                    reg: Regression,
+                    x_train: None | Series =None,
+                    y_train: None | Series =None,
+                    x_test: None | Series =None,
+                    repr_equation: bool = False):
         """
         Approximates X and Y plot data with chosen regression.
         Linear and Polynomial regressions is fully supported.
         Creates an additional column in PlotData.df with predicted values & changes self.approximated flag to True
         """
+        if not x_train:
+            x_train = self.df[self.x_name]
+        if not y_train:
+            y_train = self.df[self.y_name]
+        if not x_test:
+            x_test = self.df[self.x_name]
+
         if not self.approximated:
-            reg.fit(self.df[self.x_name], self.df[self.y_name])
+            reg.fit(x_train, y_train)
             self.approx_col_name: str = f"{reg} {self.y_name}({self.x_name})"
-            self.df[self.approx_col_name] = reg.predict(self.df[self.x_name])
+            self.df[self.approx_col_name] = reg.predict(x_test)
             self.approximated = True
             if repr_equation:
                 self.label = f"{self.label}\n {reg.equation}"

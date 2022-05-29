@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-from src.regressions import PlotData
-from src.drawer import Drawer
+from vteklib.regressions import PlotData
+from vteklib.utils.drawer import Drawer
 
 df = pd.DataFrame()
 with open('2_232.txt', 'r') as file:

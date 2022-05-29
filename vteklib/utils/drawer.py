@@ -2,7 +2,7 @@ import matplotlib.figure
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
-from src.plot_data import PlotData
+from vteklib.utils.plot_data import PlotData
 
 markers = ['o', 'v', '.', '^']
 
@@ -11,7 +11,7 @@ colors = ['black', 'grey', 'red', 'blue']
 
 class Drawer:
     def __init__(self):
-        plt.style.use('/Users/new/PycharmProjects/vteklib/src/vtek_style.mplstyle')
+        plt.style.use('/vteklib/utils/vtek_style.mplstyle')
         self.figures = []
         self.subplots: list[matplotlib.figure.Figure] = []
 

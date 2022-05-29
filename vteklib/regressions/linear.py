@@ -2,7 +2,7 @@ from abc import ABC
 from sklearn.linear_model import LinearRegression
 from pandas import Series
 from numpy import ndarray
-from src.regressions.regression import Regression
+from vteklib.regressions.regression import Regression
 import numpy as np
 
 
