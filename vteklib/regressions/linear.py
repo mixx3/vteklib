@@ -4,6 +4,7 @@ from pandas import Series
 from numpy import ndarray
 from vteklib.regressions.regression import Regression
 import numpy as np
+import random
 
 
 class Linear(Regression, ABC):

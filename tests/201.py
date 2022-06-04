@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from vteklib.utils.plot_data import PlotData
-from vteklib.utils.drawer import Drawer
+from vteklib.plot_data import PlotData
+from vteklib.drawer import Drawer
 from vteklib.regressions.linear import Linear
 df = pd.read_excel('201.xlsx')
 

@@ -1,6 +1,10 @@
-from vteklib.utils.plot_data import PlotData, format_input
-from vteklib.utils.drawer import Drawer
+import numpy as np
+
+from vteklib.plot_data import PlotData, format_input
+from vteklib.drawer import Drawer
 from vteklib.regressions.linear import Linear
+from vteklib.regressions.poly import Poly
+import numpy
 
 
 def plot1():
@@ -156,13 +160,12 @@ def plot1():
                    title='',
                    x_name='V, см³',
                    y_name='P, бар')
-
     ax = drawer.add_figure(pd1, connect_pts=True)
     xmin, xmax = ax.get_xlim()
     ax.plot([5.1627, -2], [21.4, 21.4], c='black', linestyle='dashed')
     ax.plot([4.048, -2], [25.3, 25.3], c='grey', linestyle='dashed')
     ax.plot([3.106, -2], [28.1, 28.1], c='red', linestyle='dashed')
-    ax.set_xlim(xmin, xmax)
+    ax.set_xlim(0, numpy.max(V1))
     pd2 = PlotData(V2, P2,
                    label='302,7 K',
                    title='',
@@ -173,9 +176,11 @@ def plot1():
                    x_name='V, см³',
                    y_name='P, бар',
                    title='Изотермы SF₆ при разных температурах в осях P(V)')
-    drawer.add_subplot_to_fig(ax, pd2, connect_pts=True)
-    drawer.add_subplot_to_fig(ax, pd3, connect_pts=True)
-    drawer.save_pic('1')
+    ax2 = drawer.add_subplot_to_fig(ax, pd2, connect_pts=True)
+    ax2.set_xlim(0, numpy.max(V1))
+    ax3 = drawer.add_subplot_to_fig(ax, pd3, connect_pts=True)
+    ax3.set_xlim(0, numpy.max(V1))
+    drawer.save_pic('5')
 
 
 def plot2():
@@ -207,5 +212,71 @@ def plot2():
     drawer.save_pic('2')
 
 
+def task3():
+    p1 = format_input("""17	
+18	
+18,7	""")
+    t = format_input("""297
+302,7
+308""")
+    p2 = format_input("""12	
+12,5	
+12,7	""")
+    reg = Linear()
+    pld = PlotData(t, p1)
+    pld.approximate(reg)
+    print(reg.equation)
+    reg2 = Linear()
+    pld2 = PlotData(t, p2)
+    pld2.approximate(reg2)
+    print(reg2.equation)
+
+
+def plot3():
+    p = format_input("""21,4
+26
+35
+37,6""")
+    t = format_input("""297
+302,7
+308
+318,65""")
+    pld = PlotData(t, p, title='Зависимость давления насыщенного пара от температуры',
+                   label='P(T)', x_name='T, K', y_name='P, Па')
+    pld.approximate(Linear(), repr_equation=True)
+    drawer = Drawer()
+    drawer.add_figure(pld)
+    drawer.save_pic('3')
+
+
+def plot4():
+    T = format_input("""297
+302,7
+308
+318,65""")
+    L = format_input("""13,77	
+8,19	
+7,16	
+0	""")
+    dL = format_input("""1,9	
+1,13	
+0,99	
+0	""")
+    pld = PlotData(T, L, y_error=dL,
+                   x_name='T, K', y_name='L, кДж/моль',
+                   title='Зависимость молярной теплоты испарения от температуры',
+                   label='L(T)')
+    pld.approximate(Linear(), repr_equation=True)
+    drawer = Drawer()
+    ax = drawer.add_figure(pld, errors=True)
+    ax.set_ylim(0, 18)
+    drawer.save_pic('4')
+
+
+def van_der_vaals(temp, v: numpy.ndarray):
+    p = (8.31 * temp)/(v - 0.006283 * 0.0000667) + (0.006283**2 * 0.4512) / v**2
+    return p / 100
+
+
 if __name__ == '__main__':
-    plot1()
+    plot2()

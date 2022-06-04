@@ -13,9 +13,6 @@ class Regression(ABC):
     def fit(self, x_data: Series, y_data: Series):
         """
         Trains regression model on given dataset
-        :param x_data:
-        :param y_data:
-        :return:
         """
         ...
 
@@ -23,7 +20,5 @@ class Regression(ABC):
     def predict(self, x_data: Series) -> ndarray:
         """
         Returns ndarray with predicted values
-        :param x_data:
-        :return:
         """
         ...

@@ -21,9 +21,9 @@ class PlotData:
                  y_error: ndarray | None = None
                  ):
 
-        if not x_error:
+        if x_error is None:
             x_error = np.zeros(len(X))
-        if not y_error:
+        if y_error is None:
             y_error = np.zeros(len(Y))
         self.df = pd.DataFrame()
         self.df[x_name] = format_input(X)
@@ -35,24 +35,30 @@ class PlotData:
         self.title = title
         self.label = label
         self.approximated: bool = False
+        self.theoretical: bool = False
         self.approx_col_name = ''
+
+    def build_theoretical_curve(self, res):
+        self.df['x_theoretical'] = self.df[self.x_name]
+        self.df['y_theoretical'] = res
+        self.theoretical = True
 
     def approximate(self,
                     reg: Regression,
-                    x_train: None | Series =None,
-                    y_train: None | Series =None,
-                    x_test: None | Series =None,
+                    x_train: None | Series = None,
+                    y_train: None | Series = None,
+                    x_test: None | Series = None,
                     repr_equation: bool = False):
         """
         Approximates X and Y plot data with chosen regression.
         Linear and Polynomial regressions is fully supported.
         Creates an additional column in PlotData.df with predicted values & changes self.approximated flag to True
         """
-        if not x_train:
+        if x_train is None:
             x_train = self.df[self.x_name]
-        if not y_train:
+        if y_train is None:
             y_train = self.df[self.y_name]
-        if not x_test:
+        if x_test is None:
             x_test = self.df[self.x_name]
 
         if not self.approximated:

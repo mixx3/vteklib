@@ -2,7 +2,7 @@ import matplotlib.figure
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
-from vteklib.utils.plot_data import PlotData
+from vteklib.plot_data import PlotData
 
 markers = ['o', 'v', '.', '^']
 
@@ -11,7 +11,7 @@ colors = ['black', 'grey', 'red', 'blue']
 
 class Drawer:
     def __init__(self):
-        plt.style.use('/vteklib/utils/vtek_style.mplstyle')
+        plt.style.use('/Users/new/PycharmProjects/vteklib/vteklib/vtek_style.mplstyle')
         self.figures = []
         self.subplots: list[matplotlib.figure.Figure] = []
 
@@ -38,7 +38,6 @@ class Drawer:
                            fill_between: bool = False,
                            connect_pts: bool = False
                            ):
-        print(type(ax))
         ax.grid()
         ax.set_title(ud.title)
         ax.set_xlabel(ud.x_name)
@@ -87,6 +86,13 @@ class Drawer:
                                 label=f"integral={abs(integral)}",
                                 zorder=1)
                 ax.set_ylim(ymin, ymax)
+        if ud.theoretical:
+            ax.plot(ud.df['x_theoretical'], ud.df['y_theoretical'],
+                    linestyle='-',
+                    linewidth=2.5,
+                    c=colors[len(self.subplots)],
+                    zorder=2
+                    )
         self.subplots.append(ax)
         return ax
 
