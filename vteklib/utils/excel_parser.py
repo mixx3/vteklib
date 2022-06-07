@@ -20,9 +20,6 @@ class ExcelFile:
             if vals:
                 self.series[name] = vals
 
-# every excel table contains some columns and its names, so the main issue is to parse all data in table into some
-# pandas Series objs with proper names, and then create a Plot data objs of them (in some way)
-
 
 if __name__ == '__main__':
-    ef = ExcelFile('/Users/new/PycharmProjects/vteklib/219.xlsx')
+    ef = ExcelFile('219.xlsx')
