@@ -1,8 +1,7 @@
 import random
-
 from vteklib.drawer import Drawer
-from vteklib.regressions import PlotData, format_input
-from vteklib.regressions import Linear
+from vteklib.plot_data import PlotData, format_input
+from vteklib.regressions.linear import Linear
 import numpy as np
 from vteklib.regressions.poly import Poly
 

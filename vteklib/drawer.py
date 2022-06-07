@@ -4,6 +4,7 @@ import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
 from vteklib.plot_data import PlotData
 
+
 markers = ['o', 'v', '.', '^']
 
 colors = ['black', 'grey', 'red', 'blue']
@@ -11,7 +12,8 @@ colors = ['black', 'grey', 'red', 'blue']
 
 class Drawer:
     def __init__(self):
-        plt.style.use('/Users/new/PycharmProjects/vteklib/vteklib/vtek_style.mplstyle')
+        target = str(__file__).replace('drawer.py', 'vtek_style.mplstyle')
+        plt.style.use(target)
         self.figures = []
         self.subplots: list[matplotlib.figure.Figure] = []
 
@@ -69,8 +71,11 @@ class Drawer:
                         zorder=3
                         )
         if ud.approximated:
-            ax.plot(ud.df[ud.x_name],
-                    ud.df[ud.approx_col_name],
+            x_test = np.linspace(ud.x_test_range[0], ud.x_test_range[1], ud.num_of_pts)
+            print(x_test)
+            y_test = ud.reg.predict(x_test)
+            ax.plot(x_test,
+                    y_test,
                     linestyle='-',
                     linewidth=2.5,
                     c=colors[len(self.subplots)],
@@ -80,8 +85,8 @@ class Drawer:
                 ymin, ymax = ax.get_ylim()
                 integral = np.trapz(ud.df[ud.x_name], ud.df[ud.y_name])
                 print(integral)
-                ax.fill_between(ud.df[ud.x_name],
-                                ud.df[ud.approx_col_name],
+                ax.fill_between(x_test,
+                                y_test,
                                 color='gray',
                                 label=f"integral={abs(integral)}",
                                 zorder=1)
@@ -107,3 +112,7 @@ class Drawer:
         for i, fig in enumerate(self.figures):
             fig.savefig(f"{name}_{i}.png")
             plt.close(fig)
+
+
+if __name__ == '__main__':
+    print(__file__)

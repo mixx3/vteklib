@@ -3,9 +3,9 @@ from setuptools import setup
 
 setup(
     name='vteklib',
-    version='0.1.0',
+    version='0.1.1',
     packages=['vteklib', 'vteklib.utils', 'vteklib.regressions'],
-    install_requires=['numpy', 'matplotlib', 'pandas', 'sklearn', 'scipy'],
+    install_requires=['numpy', 'matplotlib', 'pandas', 'sklearn', 'scipy', 'openpyxl'],
     url='https://github.com/mixx3/vteklib',
     license='BSD 2-Clause "Simplified"',
     author='Mike Parfenov',

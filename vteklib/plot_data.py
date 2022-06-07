@@ -36,7 +36,10 @@ class PlotData:
         self.label = label
         self.approximated: bool = False
         self.theoretical: bool = False
-        self.approx_col_name = ''
+        self.reg = None
+        self.approx_name = ''
+        self.x_test_range = [np.min(self.df[self.x_name]), np.max(self.df[self.x_name])]
+        self.num_of_pts = len(X)
 
     def build_theoretical_curve(self, res):
         self.df['x_theoretical'] = self.df[self.x_name]
@@ -47,28 +50,28 @@ class PlotData:
                     reg: Regression,
                     x_train: None | Series = None,
                     y_train: None | Series = None,
-                    x_test: None | Series = None,
+                    x_test_range=None,
                     repr_equation: bool = False):
         """
         Approximates X and Y plot data with chosen regression.
         Linear and Polynomial regressions is fully supported.
         Creates an additional column in PlotData.df with predicted values & changes self.approximated flag to True
         """
+        if x_test_range is not None:
+            self.x_test_range = x_test_range
         if x_train is None:
             x_train = self.df[self.x_name]
         if y_train is None:
             y_train = self.df[self.y_name]
-        if x_test is None:
-            x_test = self.df[self.x_name]
 
         if not self.approximated:
             reg.fit(x_train, y_train)
-            self.approx_col_name: str = f"{reg} {self.y_name}({self.x_name})"
-            self.df[self.approx_col_name] = reg.predict(x_test)
+            self.approx_name: str = f"{reg} {self.y_name}({self.x_name})"
             self.approximated = True
             if repr_equation:
                 self.label = f"{self.label}\n {reg.equation}"
-            return self.approx_col_name
+            self.reg = reg
+            return reg
 
     def __repr__(self):
         return self.df.__str__()
