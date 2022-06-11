@@ -22,4 +22,4 @@ class ExcelFile:
 
 
 if __name__ == '__main__':
-    ef = ExcelFile('/Users/new/PycharmProjects/vteklib/219.xlsx')
+    ef = ExcelFile('219.xlsx')
