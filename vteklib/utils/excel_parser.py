@@ -1,25 +1,41 @@
 import numpy as np
 import pandas
 import pandas as pd
+from collections import namedtuple
 
 
 class ExcelFile:
     def __init__(self, excel_fp: str):
         self.df: pd.DataFrame = pandas.read_excel(excel_fp)
-        self.df: pd.DataFrame = pandas.read_excel('/Users/new/PycharmProjects/vteklib/219.xlsx')
-        self.series: dict = dict()
+        self.all_series: list[DataSeries] = []
+
+    def get_series(self):
         for col in self.df.columns:
-            name = col
-            vals = []
-            pt = 0
-            curr = self.df[col][pt]
-            while not pd.isna(curr) or type(curr) == str:
-                vals.append(curr)
-                pt += 1
-                curr = self.df[col][pt]
-            if vals:
-                self.series[name] = vals
+            series_in_row: list[DataSeries] = []
+            for i in self.df[col]:
+                if type(i) == str:
+                    s = DataSeries()
+                    series_in_row.append(s)
+                    s.name = i
+                    s.data = []
+                elif not pd.isna(i) and type(i) != str:
+                    if len(series_in_row):
+                        series_in_row[-1].data.append(i)
+                    else:
+                        continue
+            for series in series_in_row:
+                if len(series.data):
+                    self.all_series.append(series)
+        return self.all_series
 
 
-if __name__ == '__main__':
-    ef = ExcelFile('219.xlsx')
+class DataSeries:
+    __slots__ = ('name', 'data')
+    name: str
+    data: list
+
+    def __init__(self):
+        pass
+
+    def __str__(self):
+        return f"{self.name} {self.data}"
