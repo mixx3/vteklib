@@ -4,7 +4,6 @@ import numpy as np
 from matplotlib.backends.backend_pdf import PdfPages
 from vteklib.plot_data import PlotData
 
-
 markers = ['o', 'v', '.', '^']
 
 colors = ['black', 'grey', 'red', 'blue']
@@ -50,7 +49,8 @@ class Drawer:
                    s=50,
                    c=colors[len(self.subplots)],
                    label=ud.label,
-                   zorder=3)
+                   zorder=3
+                   )
         if connect_pts:
             ax.plot(ud.df[ud.x_name],
                     ud.df[ud.y_name],
@@ -72,14 +72,13 @@ class Drawer:
                         )
         if ud.approximated:
             x_test = np.linspace(ud.x_test_range[0], ud.x_test_range[1], ud.num_of_pts)
-            print(x_test)
             y_test = ud.reg.predict(x_test)
             ax.plot(x_test,
                     y_test,
                     linestyle='-',
                     linewidth=2.5,
                     c=colors[len(self.subplots)],
-                    zorder=2
+                    zorder=2,
                     )
             if fill_between:
                 ymin, ymax = ax.get_ylim()
@@ -98,6 +97,7 @@ class Drawer:
                     c=colors[len(self.subplots)],
                     zorder=2
                     )
+
         self.subplots.append(ax)
         return ax
 

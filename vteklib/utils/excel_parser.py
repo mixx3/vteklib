@@ -2,6 +2,7 @@ import numpy as np
 import pandas
 import pandas as pd
 from collections import namedtuple
+from functools import lru_cache
 
 
 class ExcelFile:
@@ -39,3 +40,10 @@ class DataSeries:
 
     def __str__(self):
         return f"{self.name} {self.data}"
+
+
+@lru_cache(None)
+def get_data(path: str):
+    ef = ExcelFile(path)
+    series = ef.get_series()
+    return series

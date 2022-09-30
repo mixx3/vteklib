@@ -15,6 +15,8 @@ class Poly(Regression, ABC):
 
     def fit(self, x_data: Series, y_data: Series):
         self.reg.fit(np.matrix(x_data).T.A, y_data)
+        eq = np.polyfit(np.array(x_data), np.array(y_data), 1)
+        self.equation = f"polynomial {np.e**eq[0]} * exp({eq[1]} * X)"
 
     def predict(self, x_data) -> ndarray:
         return self.reg.predict(np.matrix(x_data).T.A)
