@@ -1,3 +1,5 @@
+import json
+
 import numpy as np
 import pandas
 import pandas as pd
@@ -29,6 +31,18 @@ class ExcelFile:
                     self.all_series.append(series)
         return self.all_series
 
+    def to_json(self):
+        names = dict()
+        res = dict()
+        for s in self.get_series():
+            if s.name not in names.keys():
+                res[s.name] = s.data
+                names[s.name] = 1
+            else:
+                res[f"{s.name}({names[s.name]})"] = s.data
+                names[s.name] += 1
+        return json.dumps(res, ensure_ascii=False, indent=4)
+
 
 class DataSeries:
     __slots__ = ('name', 'data')
@@ -45,5 +59,5 @@ class DataSeries:
 @lru_cache(None)
 def get_data(path: str):
     ef = ExcelFile(path)
-    series = ef.get_series()
+    series = ef.to_json()
     return series

@@ -11,10 +11,7 @@ import pandas as pd
 @lru_cache(None)
 def get_data(path: str):
     ef = ExcelFile(path)
-    series = ef.get_series()
-    for s in series:
-        print(s)
-    return series
+    print(ef.to_json())
 
 
 def plot_1(series):
@@ -67,5 +64,5 @@ def q_2():
 
 
 if __name__ == '__main__':
-    series = get_data("322.xlsx")
-    q_2()
+    get_data("322.xlsx")
+
