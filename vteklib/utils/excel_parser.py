@@ -41,7 +41,7 @@ class ExcelFile:
             else:
                 res[f"{s.name}({names[s.name]})"] = s.data
                 names[s.name] += 1
-        return json.dumps(res, ensure_ascii=False, indent=4)
+        return json.dumps(res, ensure_ascii=False)
 
 
 class DataSeries:

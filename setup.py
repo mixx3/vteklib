@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='vteklib',
-    version='0.3.0',
+    version='0.3.1',
     packages=['vteklib', 'vteklib.utils', 'vteklib.regressions'],
     install_requires=['numpy', 'matplotlib', 'pandas', 'sklearn', 'scipy', 'openpyxl'],
     url='https://github.com/mixx3/vteklib',
