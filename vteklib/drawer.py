@@ -45,9 +45,9 @@ class Drawer:
         ax.set_ylabel(ud.y_name)
         ax.scatter(ud.df[ud.x_name],
                    ud.df[ud.y_name],
-                   marker=markers[len(self.subplots)],
+                   marker=markers[len(self.subplots) % len(markers)],
                    s=50,
-                   c=colors[len(self.subplots)],
+                   c=colors[len(self.subplots) % len(colors)],
                    label=ud.label,
                    zorder=3
                    )
@@ -56,7 +56,7 @@ class Drawer:
                     ud.df[ud.y_name],
                     linestyle='-',
                     linewidth=2.5,
-                    c=colors[len(self.subplots)],
+                    c=colors[len(self.subplots) % len(colors)],
                     zorder=2)
         if errors:
             ax.errorbar(ud.df[ud.x_name],
@@ -67,7 +67,7 @@ class Drawer:
                         capsize=2,
                         elinewidth=1,
                         capthick=1,
-                        c=colors[len(self.subplots)],
+                        c=colors[len(self.subplots) % len(colors)],
                         zorder=3
                         )
         if ud.approximated:
@@ -77,7 +77,7 @@ class Drawer:
                     y_test,
                     linestyle='-',
                     linewidth=2.5,
-                    c=colors[len(self.subplots)],
+                    c=colors[len(self.subplots) % len(colors)],
                     zorder=2,
                     )
             if fill_between:
@@ -94,7 +94,7 @@ class Drawer:
             ax.plot(ud.df['x_theoretical'], ud.df['y_theoretical'],
                     linestyle='-',
                     linewidth=2.5,
-                    c=colors[len(self.subplots)],
+                    c=colors[len(self.subplots) % len(colors)],
                     zorder=2
                     )
 

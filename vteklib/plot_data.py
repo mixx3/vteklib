@@ -21,13 +21,13 @@ class PlotData:
                  y_error: ndarray | None = None
                  ):
 
-        if x_error is None:
-            x_error = np.zeros(len(X))
-        if y_error is None:
-            y_error = np.zeros(len(Y))
         self.df = pd.DataFrame()
         self.df[x_name] = format_input(X)
         self.df[y_name] = format_input(Y)
+        if x_error is None:
+            x_error = np.zeros(len(self.df[x_name]))
+        if y_error is None:
+            y_error = np.zeros(len(self.df[y_name]))
         self.df['x_error'] = x_error
         self.df['y_error'] = y_error
         self.x_name = x_name
