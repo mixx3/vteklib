@@ -45,7 +45,7 @@ class ExcelFile:
 
 
 class DataSeries:
-    __slots__ = ('name', 'data')
+    __slots__ = ("name", "data")
     name: str
     data: list
 

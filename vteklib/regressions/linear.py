@@ -10,16 +10,17 @@ import random
 class Linear(Regression, ABC):
     def __init__(self):
         self.reg = LinearRegression()
-        self.equation = 'linear y(x)'
+        self.equation = "linear y(x)"
 
     def fit(self, x_data: Series, y_data: Series):
         self.reg.fit(np.matrix(x_data).T.A, y_data)
-        self.equation = f"linear {str(self.reg.coef_[0])[0:6]}* X + {str(self.reg.intercept_)[0:6]}"
+        self.equation = (
+            f"linear {str(self.reg.coef_[0])[0:6]}* X + {str(self.reg.intercept_)[0:6]}"
+        )
 
     def predict(self, x_data: Series) -> ndarray:
         return self.reg.predict(np.matrix(x_data).T.A)
 
     @classmethod
     def __repr__(cls):
-        return 'linear'
-
+        return "linear"

@@ -8,7 +8,8 @@ import numpy
 
 
 def plot1():
-    V1 = format_input("""14,724
+    V1 = format_input(
+        """14,724
 12,212
 10,014
 8,4126
@@ -32,8 +33,10 @@ def plot1():
 0,47468
 0,40874
 0,3428
-0,31454""")
-    P1 = format_input("""10
+0,31454"""
+    )
+    P1 = format_input(
+        """10
 12
 14
 16
@@ -57,8 +60,10 @@ def plot1():
 24
 25
 27
-29""")
-    V2 = format_input("""14,724
+29"""
+    )
+    V2 = format_input(
+        """14,724
 12,4004
 10,328
 8,7109
@@ -81,8 +86,10 @@ def plot1():
 0,49352
 0,48096
 0,4527
-0,44328""")
-    P2 = format_input("""10,5
+0,44328"""
+    )
+    P2 = format_input(
+        """10,5
 12
 14
 16
@@ -105,8 +112,10 @@ def plot1():
 29
 30
 31
-32""")
-    V3 = format_input("""14,724
+32"""
+    )
+    V3 = format_input(
+        """14,724
 12,4632
 10,4693
 8,9464
@@ -129,8 +138,10 @@ def plot1():
 0,55004
 0,53748
 0,52492
-0,51236""")
-    P3 = format_input("""10,7
+0,51236"""
+    )
+    P3 = format_input(
+        """10,7
 12,7
 14,7
 16,7
@@ -153,75 +164,92 @@ def plot1():
 33
 34
 35
-36""")
+36"""
+    )
     drawer = Drawer()
-    pd1 = PlotData(V1, P1,
-                   label='297 K',
-                   title='',
-                   x_name='V, см³',
-                   y_name='P, бар')
+    pd1 = PlotData(V1, P1, label="297 K", title="", x_name="V, см³", y_name="P, бар")
     ax = drawer.add_figure(pd1, connect_pts=True)
     xmin, xmax = ax.get_xlim()
-    ax.plot([5.1627, -2], [21.4, 21.4], c='black', linestyle='dashed')
-    ax.plot([4.048, -2], [25.3, 25.3], c='grey', linestyle='dashed')
-    ax.plot([3.106, -2], [28.1, 28.1], c='red', linestyle='dashed')
+    ax.plot([5.1627, -2], [21.4, 21.4], c="black", linestyle="dashed")
+    ax.plot([4.048, -2], [25.3, 25.3], c="grey", linestyle="dashed")
+    ax.plot([3.106, -2], [28.1, 28.1], c="red", linestyle="dashed")
     ax.set_xlim(0, numpy.max(V1))
-    pd2 = PlotData(V2, P2,
-                   label='302,7 K',
-                   title='',
-                   x_name='V, см³',
-                   y_name='P, бар')
-    pd3 = PlotData(V3, P3,
-                   label='308 K',
-                   x_name='V, см³',
-                   y_name='P, бар',
-                   title='Изотермы SF₆ при разных температурах в осях P(V)')
+    pd2 = PlotData(V2, P2, label="302,7 K", title="", x_name="V, см³", y_name="P, бар")
+    pd3 = PlotData(
+        V3,
+        P3,
+        label="308 K",
+        x_name="V, см³",
+        y_name="P, бар",
+        title="Изотермы SF₆ при разных температурах в осях P(V)",
+    )
     ax2 = drawer.add_subplot_to_fig(ax, pd2, connect_pts=True)
     ax2.set_xlim(0, numpy.max(V1))
     ax3 = drawer.add_subplot_to_fig(ax, pd3, connect_pts=True)
     ax3.set_xlim(0, numpy.max(V1))
-    drawer.save_pic('5')
+    drawer.save_pic("5")
 
 
 def plot2():
-    P1 = format_input("""17	
+    P1 = format_input(
+        """17	
 18	
-18,7	""")
+18,7	"""
+    )
     P_error = [0.5] * len(P1)
-    T = format_input("""297
+    T = format_input(
+        """297
 302,7
-308""")
-    P2 = format_input("""12	
+308"""
+    )
+    P2 = format_input(
+        """12	
 12,5	
-12,7	""")
-    pd1 = PlotData(T, P1, y_error=P_error,
-                  title='Зваисимость давления от температуры T для двух объемов V',
-                  x_name='T, K',
-                  y_name='P, бар',
-                   label='V = 7,5 см³\n ')
-    pd2 = PlotData(T, P2, y_error=P_error, title='Зваисимость давления от температуры T для двух объемов V',
-                   x_name='T, K',
-                   y_name='P, бар',
-                   label='V = 12,3 см³')
+12,7	"""
+    )
+    pd1 = PlotData(
+        T,
+        P1,
+        y_error=P_error,
+        title="Зваисимость давления от температуры T для двух объемов V",
+        x_name="T, K",
+        y_name="P, бар",
+        label="V = 7,5 см³\n ",
+    )
+    pd2 = PlotData(
+        T,
+        P2,
+        y_error=P_error,
+        title="Зваисимость давления от температуры T для двух объемов V",
+        x_name="T, K",
+        y_name="P, бар",
+        label="V = 12,3 см³",
+    )
     pd1.approximate(Linear(), repr_equation=True)
     pd2.approximate(Linear(), repr_equation=True)
     drawer = Drawer()
     ax = drawer.add_figure(pd1, errors=True)
     ax.grid()
     drawer.add_subplot_to_fig(ax, pd2, errors=True)
-    drawer.save_pic('2')
+    drawer.save_pic("2")
 
 
 def task3():
-    p1 = format_input("""17	
+    p1 = format_input(
+        """17	
 18	
-18,7	""")
-    t = format_input("""297
+18,7	"""
+    )
+    t = format_input(
+        """297
 302,7
-308""")
-    p2 = format_input("""12	
+308"""
+    )
+    p2 = format_input(
+        """12	
 12,5	
-12,7	""")
+12,7	"""
+    )
     reg = Linear()
     pld = PlotData(t, p1)
     pld.approximate(reg)
@@ -233,50 +261,71 @@ def task3():
 
 
 def plot3():
-    p = format_input("""21,4
+    p = format_input(
+        """21,4
 26
 35
-37,6""")
-    t = format_input("""297
+37,6"""
+    )
+    t = format_input(
+        """297
 302,7
 308
-318,65""")
-    pld = PlotData(t, p, title='Зависимость давления насыщенного пара от температуры',
-                   label='P(T)', x_name='T, K', y_name='P, Па')
+318,65"""
+    )
+    pld = PlotData(
+        t,
+        p,
+        title="Зависимость давления насыщенного пара от температуры",
+        label="P(T)",
+        x_name="T, K",
+        y_name="P, Па",
+    )
     pld.approximate(Linear(), repr_equation=True)
     drawer = Drawer()
     drawer.add_figure(pld)
-    drawer.save_pic('3')
+    drawer.save_pic("3")
 
 
 def plot4():
-    T = format_input("""297
+    T = format_input(
+        """297
 302,7
 308
-318,65""")
-    L = format_input("""13,77	
+318,65"""
+    )
+    L = format_input(
+        """13,77	
 8,19	
 7,16	
-0	""")
-    dL = format_input("""1,9	
+0	"""
+    )
+    dL = format_input(
+        """1,9	
 1,13	
 0,99	
-0	""")
-    pld = PlotData(T, L, y_error=dL,
-                   x_name='T, K', y_name='L, кДж/моль',
-                   title='Зависимость молярной теплоты испарения от температуры',
-                   label='L(T)')
+0	"""
+    )
+    pld = PlotData(
+        T,
+        L,
+        y_error=dL,
+        x_name="T, K",
+        y_name="L, кДж/моль",
+        title="Зависимость молярной теплоты испарения от температуры",
+        label="L(T)",
+    )
     pld.approximate(Linear(), repr_equation=True)
     drawer = Drawer()
     ax = drawer.add_figure(pld, errors=True)
     ax.set_ylim(0, 18)
-    drawer.save_pic('4')
+    drawer.save_pic("4")
 
 
 def van_der_vaals(temp, v: numpy.ndarray):
-    p = (8.31 * temp)/(v - 0.006283 * 0.0000667) + (0.006283**2 * 0.4512) / v**2
+    p = (8.31 * temp) / (v - 0.006283 * 0.0000667) + (0.006283**2 * 0.4512) / v**2
     return p / 100
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     plot2()

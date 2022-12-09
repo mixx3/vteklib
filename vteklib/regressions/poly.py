@@ -11,7 +11,7 @@ import numpy as np
 class Poly(Regression, ABC):
     def __init__(self):
         self.reg = make_pipeline(PolynomialFeatures(), Ridge(alpha=1e-3))
-        self.equation = 'polynomial y(x)'
+        self.equation = "polynomial y(x)"
 
     def fit(self, x_data: Series, y_data: Series):
         self.reg.fit(np.matrix(x_data).T.A, y_data)
@@ -23,5 +23,4 @@ class Poly(Regression, ABC):
 
     @classmethod
     def __repr__(cls):
-        return 'polynomial'
-
+        return "polynomial"

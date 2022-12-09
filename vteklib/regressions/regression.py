@@ -9,16 +9,17 @@ class Regression(ABC):
     You can inherit this class for specific regression type.
     In this case overloading abstract methods required.
     """
+
     @abstractmethod
     def fit(self, x_data: Series, y_data: Series):
         """
         Trains regression model on given dataset
         """
-        ...
+        raise NotImplementedError
 
     @abstractmethod
     def predict(self, x_data: Series) -> ndarray:
         """
         Returns ndarray with predicted values
         """
-        ...
+        raise NotImplementedError
